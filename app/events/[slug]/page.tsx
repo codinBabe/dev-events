@@ -169,7 +169,9 @@ const EventDetails = async ({
         <ul className="events">
           {similarEvents.length > 0 &&
             similarEvents.map((similarEvent: IEvent) => (
-              <EventCard key={similarEvent.title} {...similarEvent} />
+              <li key={similarEvent.slug || similarEvent.title}>
+                <EventCard {...similarEvent} />
+              </li>
             ))}
         </ul>
       </div>
