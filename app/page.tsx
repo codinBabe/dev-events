@@ -10,7 +10,7 @@ const Home = async () => {
 
   cacheLife("hours");
 
-  let events = [];
+  let events: IEvent[] = [];
 
   try {
     const response = await fetch(`${BASE_URL}/api/events`);
