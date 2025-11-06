@@ -16,7 +16,7 @@ const eventSchema = z.object({
   mode: z.string().min(1, "Mode required"),
   audience: z.string().min(1, "Audience required"),
   agenda: z.string().min(1, "Agenda required"),
-  tags: z.string().optional(),
+  tags: z.string().min(1, "At least one tag is required"),
   organizer: z.string().min(1, "Organizer required"),
   location: z.string().min(1, "Location required"),
   description: z.string().min(10, "Description required").max(5000),
@@ -271,6 +271,9 @@ const CreateEventForm = () => {
           name="tags"
           placeholder="Add tags such as react, next, js"
         />
+        {errors.tags && (
+          <p className="text-xs text-red-400 mt-1">{errors.tags.message}</p>
+        )}
       </div>
 
       <div>
