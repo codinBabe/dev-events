@@ -103,7 +103,7 @@ const EventSchema = new Schema<IEvent>(
     },
   },
   {
-    timestamps: true, // Auto-generate createdAt and updatedAt
+    timestamps: true,
   }
 );
 
