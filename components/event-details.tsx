@@ -141,26 +141,12 @@ const EventDetails = async ({ params }: { params: Promise<string> }) => {
               label={audience}
             />
           </section>
-          {agenda &&
-            (() => {
-              try {
-                return <EventAgenda agendaItems={agenda} />;
-              } catch {
-                return null;
-              }
-            })()}
+          {agenda && agenda.length > 0 && <EventAgenda agendaItems={agenda} />}
           <section className="flex-col-gap-2">
             <h2>About the Organizer</h2>
             <p>{organizer}</p>
           </section>
-          {tags &&
-            (() => {
-              try {
-                return <EventTags tags={tags} />;
-              } catch {
-                return null;
-              }
-            })()}{" "}
+          {tags && tags.length > 0 && <EventTags tags={tags} />}
         </div>
 
         <aside className="booking">
