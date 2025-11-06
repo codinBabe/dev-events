@@ -153,6 +153,9 @@ const CreateEventForm = () => {
           className="pl-10"
           aria-label="Event date"
         />
+        {errors.date && (
+          <p className="text-xs text-red-400 mt-1">{errors.date.message}</p>
+        )}
       </div>
 
       <div className="relative">
@@ -165,6 +168,9 @@ const CreateEventForm = () => {
           className="pl-10"
           aria-label="Event time"
         />
+        {errors.time && (
+          <p className="text-xs text-red-400 mt-1">{errors.time.message}</p>
+        )}
       </div>
 
       <div className="relative">
@@ -177,6 +183,9 @@ const CreateEventForm = () => {
           className="pl-10"
           placeholder="Enter venue or online link"
         />
+        {errors.location && (
+          <p className="text-xs text-red-400 mt-1">{errors.location.message}</p>
+        )}
       </div>
 
       <div>
@@ -263,6 +272,9 @@ const CreateEventForm = () => {
           name="venue"
           placeholder="Enter event venue"
         />
+        {errors.venue && (
+          <p className="text-xs text-red-400 mt-1">{errors.venue.message}</p>
+        )}
       </div>
 
       <div>
@@ -274,6 +286,9 @@ const CreateEventForm = () => {
           name="audience"
           placeholder="Enter event audience"
         />
+        {errors.audience && (
+          <p className="text-xs text-red-400 mt-1">{errors.audience.message}</p>
+        )}
       </div>
 
       <div>
@@ -285,6 +300,9 @@ const CreateEventForm = () => {
           name="agenda"
           placeholder="Enter event agenda items"
         />
+        {errors.agenda && (
+          <p className="text-xs text-red-400 mt-1">{errors.agenda.message}</p>
+        )}
       </div>
 
       <div>
@@ -296,6 +314,9 @@ const CreateEventForm = () => {
           name="organizer"
           placeholder="About the organizer"
         />
+        {errors.organizer && (
+          <p className="text-xs text-red-400 mt-1">{errors.organizer.message}</p>
+        )}
       </div>
 
       <div>
