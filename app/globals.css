@@ -10,6 +10,7 @@
   --color-border-dark: #151024;
   --color-dark-100: #0d161a;
   --color-dark-200: #182830;
+  --color-dark-300: #243b47;
   --radius: 0.625rem;
   --background: #030708;
   --foreground: #ffffff;
@@ -53,6 +54,7 @@
   --color-border-dark: var(--color-border-dark);
   --color-dark-100: var(--color-dark-100);
   --color-dark-200: var(--color-dark-200);
+  --color-dark-300: var(--color-dark-300);
   --font-schibsted-grotesk: var(--font-schibsted-grotesk);
   --font-martian-mono: var(--font-martian-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -269,5 +271,62 @@
         @apply bg-primary hover:bg-primary/90 w-full cursor-pointer items-center justify-center rounded-[6px] px-4 py-2.5 text-lg font-semibold text-black;
       }
     }
+  }
+
+  #create-event {
+    @apply bg-dark-100 border border-dark-200 rounded-[10px] p-8 w-full max-w-[700px] mx-auto flex flex-col gap-6;
+
+    form {
+      @apply flex flex-col gap-6;
+
+      div {
+        @apply flex flex-col gap-2;
+
+        input,
+        textarea,
+        select {
+          @apply bg-dark-200 rounded-[6px] px-5 py-2.5 border border-dark-300;
+        }
+
+        input#event-location {
+          background-image: url("/icons/pin.svg");
+          background-repeat: no-repeat;
+          background-position: 12px center;
+          padding-left: 46px; /* space for the icon */
+        }
+
+        input[type="date"],
+        input[type="time"] {
+          background-repeat: no-repeat;
+          background-position: 10px center;
+          padding-left: 44px; /* leave space for icon */
+        }
+
+        /* Use custom icons from public/icons */
+        input[type="date"] {
+          background-image: url("/icons/calendar.svg");
+        }
+        input[type="time"] {
+          background-image: url("/icons/clock.svg");
+        }
+
+        /* On some browsers the native appearance must be reset */
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+          opacity: 0; /* hide native icon but keep functionality */
+        }
+        div.upload-placeholder {
+          @apply relative bg-dark-200 rounded-[6px] px-5 py-3 cursor-pointer border border-dark-300;
+        }
+      }
+
+      button {
+        @apply bg-primary hover:bg-primary/90 w-full cursor-pointer items-center justify-center rounded-[6px] px-4 py-2.5 text-lg font-semibold text-black;
+      }
+    }
+  }
+
+  #event-page {
+    @apply min-h-screen flex flex-col items-center justify-center;
   }
 }
