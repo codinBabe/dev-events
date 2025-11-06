@@ -5,27 +5,31 @@ import { cacheLife } from "next/cache";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 if (!BASE_URL) {
-  throw new Error('NEXT_PUBLIC_BASE_URL environment variable is not configured');
+  throw new Error(
+    "NEXT_PUBLIC_BASE_URL environment variable is not configured"
+  );
 }
-
-const page = async () => {
 
 const page = async () => {
   "use cache";
   cacheLife("hours");
 
   const response = await fetch(`${BASE_URL}/api/events`);
-  
+
   if (!response.ok) {
-    console.error(`Failed to fetch events: ${response.status} ${response.statusText}`);
+    console.error(
+      `Failed to fetch events: ${response.status} ${response.statusText}`
+    );
     return (
       <section id="event-page">
         <h1>All Events</h1>
-        <p className="mt-8 text-center">Failed to load events. Please try again later.</p>
+        <p className="mt-8 text-center">
+          Failed to load events. Please try again later.
+        </p>
       </section>
     );
   }
-  
+
   const data = await response.json();
   const events = data.events || [];
 

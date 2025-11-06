@@ -51,6 +51,7 @@ const CreateEventForm = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [previewSrc, setPreviewSrc] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -97,7 +98,13 @@ const CreateEventForm = () => {
       });
 
       // Append image file
-      if (selectedFile) formData.append("image", selectedFile);
+      if (!selectedFile) {
+        setStatus("idle");
+        setImageError("Event image is required.");
+        return;
+      }
+      setImageError(null);
+      formData.append("image", selectedFile);
 
       const response = await createEvent(formData);
       setStatus(response.success ? "success" : "error");
@@ -249,6 +256,9 @@ const CreateEventForm = () => {
               </div>
             </div>
           )}
+          {imageError && (
+            <p className="text-xs text-red-400 mt-1">{imageError}</p>
+          )}
         </div>
       </div>
 
@@ -315,7 +325,9 @@ const CreateEventForm = () => {
           placeholder="About the organizer"
         />
         {errors.organizer && (
-          <p className="text-xs text-red-400 mt-1">{errors.organizer.message}</p>
+          <p className="text-xs text-red-400 mt-1">
+            {errors.organizer.message}
+          </p>
         )}
       </div>
 

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Event } from "@/database";
-import { Event } from "@/database";
 import connectDB from "@/lib/mongodb";
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
 

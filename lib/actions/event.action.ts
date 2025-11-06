@@ -56,21 +56,46 @@ export const createEvent = async (data: FormData) => {
     const location = data.get("location") as string;
     const description = data.get("description") as string;
 
+    // Validate required fields
+    const requiredFields = {
+      title,
+      overview,
+      audience,
+      venue,
+      date,
+      time,
+      mode,
+      organizer,
+      location,
+      description,
+    };
+    for (const [field, value] of Object.entries(requiredFields)) {
+      if (!value || value.trim() === "") {
+        return { success: false, error: `${field} is required` };
+      }
+    }
+
     const agenda = ((data.get("agenda") as string) || "")
-      .replace(/\n/g, ",")
-      .split(",")
+      .split(/[\n,]+/)
       .map((i) => i.trim())
       .filter(Boolean);
 
     const tags = ((data.get("tags") as string) || "")
-      .replace(/\n/g, ",")
-      .split(",")
+      .split(/[\n,]+/)
       .map((t) => t.trim())
       .filter(Boolean);
 
+    if (agenda.length === 0) {
+      return { success: false, error: "At least one agenda item is required" };
+    }
+
+    if (tags.length === 0) {
+      return { success: false, error: "At least one tag is required" };
+    }
+
     const file = data.get("image") as File;
     if (!file) {
-      throw new Error("Image file is required");
+      return { success: false, error: "Image file is required" };
     }
 
     const image = await uploadImageToCloudinary(file);
@@ -90,13 +115,15 @@ export const createEvent = async (data: FormData) => {
       agenda,
       image,
     });
-    revalidatePath("/events");
+    revalidatePath("/events", "page");
     return { success: true };
   } catch (error) {
     console.error(
       "Error creating event:",
       error instanceof Error ? error.message : "Unknown error"
     );
-    return { success: false, error: (error as Error).message };
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return { success: false, error: errorMessage };
   }
 };
