@@ -313,15 +313,6 @@ export async function deleteEvent(eventId: string): Promise<ActionResponse> {
     } finally {
       session.endSession();
     }
-
-    revalidatePath("/admin/dashboard", "page");
-    revalidatePath("/events", "page");
-    revalidatePath("/", "page");
-
-    return {
-      success: true,
-      message: `Event deleted successfully. ${bookingDeletionResult.deletedCount} booking(s) also removed.`,
-    };
   } catch (error) {
     console.error(
       "Error deleting event:",
