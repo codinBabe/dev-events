@@ -130,7 +130,6 @@ const CreateEventForm = () => {
       console.error("Event creation failed:", error);
       setStatus("error");
     }
-    }
   }
 
   return (
