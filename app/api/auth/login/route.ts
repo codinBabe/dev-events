@@ -59,7 +59,6 @@ export async function POST(req: NextRequest) {
         { status: 401 }
       );
     }
-    }
 
     // Create signed token compatible with middleware
     const timestamp = Date.now().toString();
