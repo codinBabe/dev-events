@@ -1,8 +1,8 @@
-import CreateEventForm from "@/components/form/create-event-form";
+import CreateEventForm from "@/components/forms/create-event-form";
 
 const CreateEventPage = () => {
   return (
-    <section className="py-8 px-4">
+    <section>
       <h1 className="text-center font-semibold">Create an Event</h1>
 
       <div id="create-event" className="mt-8">

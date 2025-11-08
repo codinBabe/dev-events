@@ -13,6 +13,9 @@ const eventSchema = z.object({
   venue: z.string().min(1, "Venue required"),
   date: z.string().min(1, "Date required"),
   time: z.string().min(1, "Time required"),
+  image: z.instanceof(File).refine((file) => file.size > 0, {
+    message: "Image file is required",
+  }),
   mode: z.string().min(1, "Mode required"),
   audience: z.string().min(1, "Audience required"),
   agenda: z.string().min(1, "Agenda required"),
@@ -61,10 +64,17 @@ const CreateEventForm = () => {
     setSelectedFile(file);
     if (file) {
       const reader = new FileReader();
+      let isMounted = true;
       reader.onload = () => {
-        setPreviewSrc(String(reader.result));
+        if (isMounted && reader.result) {
+          setPreviewSrc(reader.result as string);
+        }
       };
       reader.readAsDataURL(file);
+      return () => {
+        isMounted = false;
+        reader.abort();
+      };
     } else {
       setPreviewSrc(null);
     }
@@ -117,6 +127,7 @@ const CreateEventForm = () => {
         if (fileInputRef.current) fileInputRef.current.value = "";
       }
     } catch (error) {
+      console.error("Event creation failed:", error);
       setStatus("error");
     }
   }
@@ -343,6 +354,11 @@ const CreateEventForm = () => {
           name="description"
           placeholder="Briefly describe the event"
         />
+        {errors.description && (
+          <p className="text-xs text-red-400 mt-1">
+            {errors.description.message}
+          </p>
+        )}
       </div>
 
       {status === "success" && (

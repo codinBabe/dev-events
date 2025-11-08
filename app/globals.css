@@ -329,4 +329,81 @@
   #event-page {
     @apply min-h-screen flex flex-col items-center justify-center;
   }
+
+  #dashboard {
+    @apply min-h-screen w-full max-w-7xl mx-auto;
+
+    .dashboard-statistics {
+      @apply bg-dark-200 rounded-t-lg shadow overflow-hidden;
+    }
+
+    table {
+      @apply min-w-full;
+
+      thead {
+        @apply bg-dark-200;
+
+        tr {
+          @apply font-normal;
+        }
+
+        th {
+          @apply px-6 py-3 text-left text-sm tracking-wider whitespace-nowrap;
+        }
+      }
+
+      tbody {
+        @apply bg-dark-100;
+
+        tr {
+          @apply hover:bg-dark-200 divide-x divide-y divide-dark-200 transition;
+        }
+
+        td {
+          @apply px-6 py-3;
+          div {
+            @apply font-medium;
+          }
+        }
+      }
+    }
+
+    .dashboard-header {
+      @apply flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8;
+    }
+    .button-submit {
+      @apply bg-primary hover:bg-primary/90 text-black flex items-center justify-center font-semibold py-2 px-4 rounded-md;
+    }
+    #pagination {
+      @apply flex items-center justify-between gap-4 mt-4;
+
+      button {
+        @apply px-4 py-2 bg-dark-200 border border-dark-100 text-white rounded disabled:opacity-40 disabled:cursor-not-allowed;
+      }
+    }
+  }
+
+  #login {
+    @apply min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8;
+
+    .login-container {
+      @apply bg-dark-100 border border-dark-200 space-y-4 rounded-lg max-w-md w-full p-6;
+
+      form {
+        @apply flex flex-col gap-5;
+
+        div {
+          @apply flex flex-col gap-1;
+
+          input {
+            @apply bg-dark-200 rounded-[6px] px-5 py-2.5 border border-dark-300;
+          }
+        }
+
+        .button-submit {
+          @apply bg-primary hover:bg-primary/90 w-full cursor-pointer items-center justify-center rounded-[6px] px-4 py-2.5 text-lg font-semibold text-black;
+        }
+      }
+    }
+  }
 }
