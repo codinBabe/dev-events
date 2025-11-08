@@ -13,6 +13,9 @@ const eventSchema = z.object({
   venue: z.string().min(1, "Venue required"),
   date: z.string().min(1, "Date required"),
   time: z.string().min(1, "Time required"),
+  image: z.instanceof(File).refine((file) => file.size > 0, {
+    message: "Image file is required",
+  }),
   mode: z.string().min(1, "Mode required"),
   audience: z.string().min(1, "Audience required"),
   agenda: z.string().min(1, "Agenda required"),
@@ -61,10 +64,17 @@ const CreateEventForm = () => {
     setSelectedFile(file);
     if (file) {
       const reader = new FileReader();
+      let isMounted = true;
       reader.onload = () => {
-        setPreviewSrc(String(reader.result));
+        if (isMounted && reader.result) {
+          setPreviewSrc(reader.result as string);
+        }
       };
       reader.readAsDataURL(file);
+      return () => {
+        isMounted = false;
+        reader.abort();
+      };
     } else {
       setPreviewSrc(null);
     }
@@ -110,19 +120,35 @@ const CreateEventForm = () => {
       setStatus(response.success ? "success" : "error");
 
       if (response.success) {
+        setStatus("success");
         reset();
         setPreviewSrc(null);
         setSelectedFile(null);
 
         if (fileInputRef.current) fileInputRef.current.value = "";
+      } else {
+        setStatus("error");
       }
     } catch (error) {
+      console.error("Event creation failed:", error);
       setStatus("error");
+      setImageError(
+        error instanceof Error ? error.message : "An unexpected error occurred"
+      );
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={(e) => {
+        if (!selectedFile) {
+          e.preventDefault();
+          setImageError("Event image is required.");
+          return;
+        }
+        handleSubmit(onSubmit)();
+      }}
+    >
       <div>
         <label htmlFor="event-title">Event Title</label>
         <input
@@ -343,6 +369,11 @@ const CreateEventForm = () => {
           name="description"
           placeholder="Briefly describe the event"
         />
+        {errors.description && (
+          <p className="text-xs text-red-400 mt-1">
+            {errors.description.message}
+          </p>
+        )}
       </div>
 
       {status === "success" && (
