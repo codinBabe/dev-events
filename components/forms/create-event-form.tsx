@@ -139,15 +139,7 @@ const CreateEventForm = () => {
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        if (!selectedFile) {
-          e.preventDefault();
-          setImageError("Event image is required.");
-          return;
-        }
-        handleSubmit(onSubmit)();
-      }}
+    <form onSubmit={handleSubmit(onSubmit)}>
     >
       <div>
         <label htmlFor="event-title">Event Title</label>
