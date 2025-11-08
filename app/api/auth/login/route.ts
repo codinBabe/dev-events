@@ -27,14 +27,30 @@ export async function POST(req: NextRequest) {
     }
 
     // Use timing-safe comparison to prevent timing attacks
+    const usernameBuffer = Buffer.from(username);
+    const adminUsernameBuffer = Buffer.from(adminUsername);
+    const passwordBuffer = Buffer.from(password);
+    const adminPasswordBuffer = Buffer.from(adminPassword);
+
+    if (
+      usernameBuffer.length !== adminUsernameBuffer.length ||
+      passwordBuffer.length !== adminPasswordBuffer.length
+    ) {
+      return NextResponse.json(
+        { success: false, message: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
+
+    // Use timing-safe comparison to prevent timing attacks
     const isUsernameValid = crypto.timingSafeEqual(
-      Buffer.from(username),
-      Buffer.from(adminUsername)
+      usernameBuffer,
+      adminUsernameBuffer
     );
 
     const isPasswordValid = crypto.timingSafeEqual(
-      Buffer.from(password),
-      Buffer.from(adminPassword)
+      passwordBuffer,
+      adminPasswordBuffer
     );
 
     if (!isUsernameValid || !isPasswordValid) {
@@ -42,6 +58,7 @@ export async function POST(req: NextRequest) {
         { success: false, message: "Invalid credentials" },
         { status: 401 }
       );
+    }
     }
 
     // Create signed token compatible with middleware
