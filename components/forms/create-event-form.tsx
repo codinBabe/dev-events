@@ -120,21 +120,16 @@ const CreateEventForm = () => {
       setStatus(response.success ? "success" : "error");
 
       if (response.success) {
-        setStatus("success");
         reset();
         setPreviewSrc(null);
         setSelectedFile(null);
 
         if (fileInputRef.current) fileInputRef.current.value = "";
-      } else {
-        setStatus("error");
       }
     } catch (error) {
       console.error("Event creation failed:", error);
       setStatus("error");
-      setImageError(
-        error instanceof Error ? error.message : "An unexpected error occurred"
-      );
+    }
     }
   }
 
