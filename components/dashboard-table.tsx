@@ -134,7 +134,7 @@ const DashboardTable = ({ events, totalPages, page }: Props) => {
                   <td>
                     <div className="flex justify-end gap-1">
                       <Link
-                        href={`/admin/dashboard/edit/${event._id}`}
+                        href={`/admin/edit?id=${event._id}`}
                         className="px-3 py-1.5 text-primary hover:bg-dark-100 transition"
                       >
                         Edit
