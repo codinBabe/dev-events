@@ -13,9 +13,6 @@ const eventSchema = z.object({
   venue: z.string().min(1, "Venue required"),
   date: z.string().min(1, "Date required"),
   time: z.string().min(1, "Time required"),
-  image: z.instanceof(File).refine((file) => file.size > 0, {
-    message: "Image file is required",
-  }),
   mode: z.string().min(1, "Mode required"),
   audience: z.string().min(1, "Audience required"),
   agenda: z.string().min(1, "Agenda required"),
