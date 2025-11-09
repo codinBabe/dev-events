@@ -338,7 +338,7 @@
     }
 
     table {
-      @apply min-w-full;
+      @apply w-full table-auto border-collapse shadow;
 
       thead {
         @apply bg-dark-200;
@@ -384,7 +384,7 @@
   }
 
   #login {
-    @apply min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8;
+    @apply min-h-[80vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8;
 
     .login-container {
       @apply bg-dark-100 border border-dark-200 space-y-4 rounded-lg max-w-md w-full p-6;
